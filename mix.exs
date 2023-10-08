@@ -75,15 +75,15 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
       licenses: ["Apache-2.0"],
       links: %{
         "GitHub" => @github,
-        "Tesla" => "https://github.com/elixir-tesla/tesla",
-        "xmlrpc" => "https://github.com/ewildgoose/elixir-xml_rpc"
+        "Tesla" => "https://github.com/elixir-tesla/tesla"
       }
     ]
   end
 
   defp docs do
     [
-      main: "Tesla.Middleware.DynamicHeaders",
+      # main: "Tesla.Middleware.DynamicHeaders",
+      main: "README",
       extras: [
         "README.md",
         "CHANGELOG.md": [title: "Changelog"],
