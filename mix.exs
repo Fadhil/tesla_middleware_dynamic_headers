@@ -7,7 +7,7 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
     [
       app: :tesla_middleware_dynamic_headers,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
