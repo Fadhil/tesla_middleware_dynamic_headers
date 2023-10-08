@@ -100,9 +100,9 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
       setup: ["deps.get"],
       quality: [
         "format --check-formatted",
+        "credo",
         # mix deps.clean --unlock --unused
         "deps.unlock --check-unused",
-        "credo",
         "hex.audit",
         "deps.audit",
         "dialyzer --halt-exit-status"
