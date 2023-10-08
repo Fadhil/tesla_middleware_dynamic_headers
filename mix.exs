@@ -106,7 +106,7 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
         # "hex.outdated",
         "hex.audit",
         "deps.audit",
-        "dialyzer --halt-exit-status"
+        "dialyzer"
       ],
       "quality.ci": [
         "format --check-formatted",
@@ -115,7 +115,7 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
         "hex.audit",
         "deps.audit",
         "credo",
-        "dialyzer --halt-exit-status"
+        "dialyzer"
       ]
     ]
   end
