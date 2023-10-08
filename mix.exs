@@ -83,7 +83,7 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
   defp docs do
     [
       # main: "Tesla.Middleware.DynamicHeaders",
-      main: "README",
+      main: "readme",
       extras: [
         "README.md",
         "CHANGELOG.md": [title: "Changelog"],
