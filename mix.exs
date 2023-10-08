@@ -6,7 +6,7 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
   def project do
     [
       app: :tesla_middleware_dynamic_headers,
-      version: "0.7.1",
+      version: "0.7.2",
       elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
@@ -82,8 +82,8 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
 
   defp docs do
     [
-      # main: "Tesla.Middleware.DynamicHeaders",
-      main: "readme",
+      main: "Tesla.Middleware.DynamicHeaders",
+      # main: "readme",
       extras: [
         "README.md",
         "CHANGELOG.md": [title: "Changelog"],
