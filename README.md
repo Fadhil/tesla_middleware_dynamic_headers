@@ -64,7 +64,7 @@ defmodule FooClient do
   plug(Tesla.Middleware.Logger)
 
   defp get_authorization(header_name) do
-    {header_name, "token: " <> Application.get_env(:my_client, :auth_token)}
+    {header_name, "token: " <> Application.get_env(@app, :auth_token)}
   end
 end
 ```
@@ -75,12 +75,36 @@ The following example shows how to use a custom function to generate all the hea
 defmodule FooClient do
   use Tesla
 
+  @app :foo_client
+
   plug Tesla.Middleware.DynamicHeaders, &get_dynamic_headers/0
 
   defp get_dynamic_headers do
-    Application.get_env(:foo_client, :auth_headers)
+    Application.get_env(@app, :headers)
   end
 end
+```
+
+The equivalent configuration in `config/test.exs` might look like:
+
+```elixir
+config :foo_client,
+  foo_token: "footoken",
+  bar_token: "bartoken",
+  auth_token: "authtoken"
+
+config :foo_client,
+  headers: [
+    {"Authorization", "token: authtoken"}
+  ]
+```
+
+In production, you would set environment variables with the tokens, then read them
+in `config/runtime.exs`:
+
+```elixir
+config :foo_client,
+  foo_token: = System.get_env("FOO_TOKEN") || raise "missing environment variable FOO_TOKEN"
 ```
 
 Documentation is here: https://hexdocs.pm/tesla_middleware_dynamic_headers
