@@ -21,7 +21,8 @@ defmodule Tesla.Middleware.DynamicHeaders.BasicTest do
 
   describe "get_header/2 Application.get_env/3" do
     test "returns value" do
-      assert {"Bar", "bartoken"} = DynamicHeaders.get_header({"Bar", {@app, :bar_token, "default"}})
+      assert {"Bar", "bartoken"} =
+               DynamicHeaders.get_header({"Bar", {@app, :bar_token, "default"}})
     end
 
     test "returns default value if missing" do
@@ -31,7 +32,8 @@ defmodule Tesla.Middleware.DynamicHeaders.BasicTest do
 
   describe "get_header/2 fun" do
     test "calls function" do
-      assert {"Authorization", "authtoken"} = DynamicHeaders.get_header({"Authorization", &get_authorization/1})
+      assert {"Authorization", "authtoken"} =
+               DynamicHeaders.get_header({"Authorization", &get_authorization/1})
     end
   end
 
