@@ -103,6 +103,7 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
         "credo",
         # mix deps.clean --unlock --unused
         "deps.unlock --check-unused",
+        # "hex.outdated",
         "hex.audit",
         "deps.audit",
         "dialyzer --halt-exit-status"
@@ -110,6 +111,7 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
       "quality.ci": [
         "format --check-formatted",
         "deps.unlock --check-unused",
+        # "hex.outdated",
         "hex.audit",
         "deps.audit",
         "credo",
