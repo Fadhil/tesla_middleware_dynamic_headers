@@ -49,6 +49,28 @@ defmodule Tesla.Middleware.DynamicHeaders do
     end
   end
   ```
+
+  The equivalent configuration in `config/test.exs` might look like:
+
+  ```
+  config :foo_client,
+    foo_token: "footoken",
+    bar_token: "bartoken",
+    auth_token: "authtoken"
+
+  config :foo_client,
+    headers: [
+      {"Authorization", "token: authtoken"}
+    ]
+  ```
+
+  In production, you would set environment variables with the tokens, then read them
+  in `config/runtime.exs`:
+
+  ```elixir
+  config :foo_client,
+    foo_token: = System.get_env("FOO_TOKEN") || raise "missing environment variable FOO_TOKEN"
+  ```
   """
   @behaviour Tesla.Middleware
 

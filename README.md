@@ -71,7 +71,7 @@ end
 
 The following example shows how to use a custom function to generate all the headers:
 
-```
+```elixir
 defmodule FooClient do
   use Tesla
 
