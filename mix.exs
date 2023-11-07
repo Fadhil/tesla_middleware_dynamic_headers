@@ -60,6 +60,7 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
       {:hackney, "~> 1.18", only: [:dev, :test]},
       {:junit_formatter, "~> 3.3", only: [:dev, :test], runtime: false},
       {:mix_audit, "~> 2.0", only: [:dev, :test], runtime: false},
+      {:styler, "~> 0.9.6", only: [:dev, :test], runtime: false},
       {:tesla, "~> 1.5"}
     ]
   end
