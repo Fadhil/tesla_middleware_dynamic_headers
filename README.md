@@ -104,7 +104,7 @@ in `config/runtime.exs`:
 
 ```elixir
 config :foo_client,
-  foo_token: = System.get_env("FOO_TOKEN") || raise "missing environment variable FOO_TOKEN"
+  foo_token: System.get_env("FOO_TOKEN") || raise "missing environment variable FOO_TOKEN"
 ```
 
 Documentation is here: https://hexdocs.pm/tesla_middleware_dynamic_headers
