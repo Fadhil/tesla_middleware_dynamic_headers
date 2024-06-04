@@ -32,8 +32,8 @@ defmodule Tesla.Middleware.DynamicHeaders do
       {"content/type", "application/json"}
     ]
 
-    defp get_authorization(header_name) do
-      {header_name, "token: " <> Application.get_env(:my_client, :auth_token)}
+    defp get_authorization("Authorization") do
+      "token: " <> Application.get_env(:my_client, :auth_token)
     end
   end
   ```
