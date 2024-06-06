@@ -12,6 +12,25 @@ Middleware for the [Tesla](https://hexdocs.pm/tesla/readme.html) HTTP client
 that sets value for HTTP headers dynamically at runtime from the application
 environment.
 
+For example:
+
+```elixir
+plug Tesla.Middleware.DynamicHeaders, [
+    # Set header to Application.get_env(:my_app, :foo_token)
+    {"X-Foo-Token", {:my_app, :foo_token}},
+    # Set header to Application.get_env(:my_app, :foo_token, "default")
+    {"X-Bar-Token", {:my_app, :bar_token, "default"}},
+    # Set value in a function
+    {"Authorization", &get_authorization/1},
+    # Set a static value
+    {"content/type", "application/json"}
+  ]
+
+defp get_authorization(header_name) do
+  "token: " <> Application.get_env(@app, :auth_token)
+end
+```
+
 This is most useful to handle secrets such as auth tokens. If you set secrets at
 compile time, then they are hard coded into the release file, a security risk.
 Similarly, if you build your code in a CI system, then you have to make the
