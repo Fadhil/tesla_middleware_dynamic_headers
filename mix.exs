@@ -95,8 +95,8 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
         "CONTRIBUTING.md": [title: "Contributing"],
         "CODE_OF_CONDUCT.md": [title: "Code of Conduct"]
       ],
-      api_reference: false
-      # source_url_pattern: "#{@github}/blob/master/%{path}#L%{line}"
+      api_reference: false,
+      source_url_pattern: "#{@github}/blob/master/%{path}#L%{line}"
     ]
   end
 
