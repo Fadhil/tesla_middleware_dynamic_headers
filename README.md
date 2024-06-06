@@ -1,4 +1,9 @@
 ![test workflow](https://github.com/cogini/tesla_middleware_dynamic_headers/actions/workflows/test.yml/badge.svg)
+[![Module Version](https://img.shields.io/hexpm/v/tesla_middleware_dynamic_headers.svg)](https://hex.pm/packages/tesla_middleware_dynamic_headers)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/tesla_middleware_dynamic_headers)
+[![Total Download](https://img.shields.io/hexpm/dt/tesla_middleware_dynamic_headers.svg)](https://hex.pm/packages/tesla_middleware_dynamic_headers)
+[![License](https://img.shields.io/hexpm/l/tesla_middleware_dynamic_headers.svg)](https://github.com/cogini/tesla_middleware_dynamic_headers/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/cogini/tesla_middleware_dynamic_headers.svg)](https://github.com/cogini/tesla_middleware_dynamic_headers/commits/master)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 # Tesla.Middleware.DynamicHeaders
@@ -108,3 +113,8 @@ config :foo_client,
 Documentation is here: https://hexdocs.pm/tesla_middleware_dynamic_headers
 
 This project uses the Contributor Covenant version 2.1. Check [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md) for more information.
+
+# Contacts
+
+I am `jakemorrison` on on the Elixir Slack and Discord, `reachfh` on Freenode
+`#elixir-lang` IRC channel. Happy to chat or help with your projects.
