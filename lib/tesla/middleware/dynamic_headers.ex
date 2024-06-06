@@ -42,7 +42,7 @@ defmodule Tesla.Middleware.DynamicHeaders do
     plug Tesla.Middleware.Logger
 
     defp get_authorization(header_name) do
-      {header_name, "token: " <> Application.get_env(@app, :auth_token)}
+      "token: " <> Application.get_env(@app, :auth_token)
     end
   end
   ```
