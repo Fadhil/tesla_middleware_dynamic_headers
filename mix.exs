@@ -2,14 +2,14 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
   use Mix.Project
 
   @github "https://github.com/cogini/tesla_middleware_dyamic_headers"
+  @version "0.7.3"
 
   def project do
     [
       app: :tesla_middleware_dynamic_headers,
-      version: "0.7.2",
+      version: @version,
       elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
-      build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       dialyzer: [
@@ -27,8 +27,6 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
       ],
       description: description(),
       package: package(),
-      # Docs
-      name: "Tesla.Middleware.DynamicHeaders",
       source_url: @github,
       homepage_url: @github,
       docs: docs(),
@@ -53,14 +51,15 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
 
   defp deps do
     [
+      {:castore, "~> 1.0", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.29", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.14", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.32", only: :dev, runtime: false},
+      {:excoveralls, "~> 0.18.0", only: [:dev, :test], runtime: false},
       {:hackney, "~> 1.18", only: [:dev, :test]},
       {:junit_formatter, "~> 3.3", only: [:dev, :test], runtime: false},
       {:mix_audit, "~> 2.0", only: [:dev, :test], runtime: false},
-      {:styler, "~> 0.9.6", only: [:dev, :test], runtime: false},
+      {:styler, "~> 0.11.0", only: [:dev, :test], runtime: false},
       {:tesla, "~> 1.5"}
     ]
   end
@@ -71,12 +70,14 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
 
   defp package do
     [
-      name: "tesla_middleware_dynamic_headers",
+      description: description(),
       maintainers: ["Jake Morrison"],
       licenses: ["Apache-2.0"],
       links: %{
+        "Tesla" => "https://github.com/elixir-tesla/tesla",
         "GitHub" => @github,
-        "Tesla" => "https://github.com/elixir-tesla/tesla"
+        "Changelog" =>
+          "#{@github}/blob/#{@version}/CHANGELOG.md##{String.replace(@version, ".", "")}"
       }
     ]
   end
@@ -85,10 +86,13 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
     [
       main: "Tesla.Middleware.DynamicHeaders",
       # main: "readme",
+      source_url: @github,
+      source_ref: @version,
       extras: [
         "README.md",
         "CHANGELOG.md": [title: "Changelog"],
-        LICENSE: [title: "License (Apache 2.0)"],
+        "LICENSE.md": [title: "License (Apache-2.0)"],
+        "CONTRIBUTING.md": [title: "Contributing"],
         "CODE_OF_CONDUCT.md": [title: "Code of Conduct"]
       ],
       api_reference: false
@@ -100,12 +104,14 @@ defmodule Tesla.Middleware.DynamicHeaders.MixProject do
     [
       setup: ["deps.get"],
       quality: [
+        "test",
         "format --check-formatted",
         "credo",
+        # "credo --mute-exit-status",
         # mix deps.clean --unlock --unused
         "deps.unlock --check-unused",
         # "hex.outdated",
-        "hex.audit",
+        # "hex.audit",
         "deps.audit",
         "dialyzer --quiet-with-result"
       ],
