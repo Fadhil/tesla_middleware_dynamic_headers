@@ -16,11 +16,11 @@ For example:
 
 ```elixir
 plug Tesla.Middleware.DynamicHeaders, [
-    # Set header to Application.get_env(:my_app, :foo_token)
+    # Set header with Application.get_env(:my_app, :foo_token)
     {"X-Foo-Token", {:my_app, :foo_token}},
-    # Set header to Application.get_env(:my_app, :foo_token, "default")
+    # Set header with Application.get_env(:my_app, :foo_token, "default")
     {"X-Bar-Token", {:my_app, :bar_token, "default"}},
-    # Set value in a function
+    # Set value with a function
     {"Authorization", &get_authorization/1},
     # Set a static value
     {"content/type", "application/json"}
@@ -32,9 +32,17 @@ end
 ```
 
 This is most useful to handle secrets such as auth tokens. If you set secrets at
-compile time, then they are hard coded into the release file, a security risk.
+compile time, then they are hard coded into the release binaries, a security risk.
 Similarly, if you build your code in a CI system, then you have to make the
 secrets available there.
+
+Instead, set values in the application environment from OS environment
+variables in `config/runtime.exs`:
+
+```elixir
+config :my_app,
+  foo_token: System.get_env("FOO_TOKEN") || raise "missing environment variable FOO_TOKEN"
+```
 
 ## Installation
 
