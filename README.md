@@ -67,7 +67,7 @@ defmodule FooClient do
 end
 ```
 
-The following example shows how to use a custom function to generate all the headers:
+The following example uses a custom function to generate all the headers:
 
 ```elixir
 defmodule FooClient do
@@ -83,7 +83,7 @@ defmodule FooClient do
 end
 ```
 
-The equivalent configuration in `config/test.exs` might look like:
+The app configuration in `config/test.exs` might look like:
 
 ```elixir
 config :foo_client,
@@ -97,8 +97,8 @@ config :foo_client,
   ]
 ```
 
-In production, you would set environment variables with the tokens, then read them
-in `config/runtime.exs`:
+In production, you would normally set environment variables with the tokens
+then read them in `config/runtime.exs`:
 
 ```elixir
 config :foo_client,
