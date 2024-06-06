@@ -4,13 +4,13 @@
 # Tesla.Middleware.DynamicHeaders
 
 Middleware for the [Tesla](https://hexdocs.pm/tesla/readme.html) HTTP client
-that sets value for HTTP headers dynamically at runtime. 
+that sets value for HTTP headers dynamically at runtime from the application
+environment.
 
-This is most useful to handle secrets such as auth tokens. If you set them at
-compile time, then they are hard coded into the release file, which is a
-security risk. Similarly, if you build your code in a CI system, then you have
-to make the secrets available there. 
-
+This is most useful to handle secrets such as auth tokens. If you set secrets at
+compile time, then they are hard coded into the release file, a security risk.
+Similarly, if you build your code in a CI system, then you have to make the
+secrets available there.
 
 ## Installation
 
@@ -26,21 +26,19 @@ end
 
 ## Configuration
 
-Add this middleware as a plug in your client.
+Add `plug Tesla.Middleware.DynamicHeaders` to the client and specify a list
+of headers.
 
-Add `plug Tesla.Middleware.DynamicHeaders` to the client and
-specify the list of dynamic headers. 
+The plug takes a single argument, either a list of tuples or a function.
+The first element of the tuple is the header name. Other values are as follows:
 
-The plug takes a single option, either a list of tuples or a function. The
-first element of the tuple is the header name. Other values are as follows:
-
-* `{application, key}`: Reads the value from `Application.get_env/2`
-* `{application, key, default}`: Reads the value from `Application.get_env/3`
-* Function with arity 1: Calls the function with the header name to get the value
+* `{application, key}`: Read the value from `Application.get_env/2`
+* `{application, key, default}`: Read the value from `Application.get_env/3`
+* Function with arity 1: Call the function with the header name to get the value
 * Any other value is passed through as is, same as `Tesla.Middleware.Headers`
 
-If the option is a zero-arity function, it is called to generate a list of
-`{header_name, value`} tuples.
+If the argument is a zero-arity function, it is called to generate a list of
+`{header_name, value}` tuples.
 
 ## Examples
 
@@ -52,16 +50,16 @@ defmodule FooClient do
 
   @app :foo_client
 
-  plug(Tesla.Middleware.BaseUrl, "https://example.com/")
+  plug Tesla.Middleware.BaseUrl, "https://example.com/"
 
-  plug(Tesla.Middleware.DynamicHeaders, [
+  plug Tesla.Middleware.DynamicHeaders, [
     {"X-Foo-Token", {@app, :foo_token}},
     {"X-Bar-Token", {@app, :bar_token, "default"}},
     {"Authorization", &get_authorization/1},
     {"content/type", "application/json"}
-    ])
+    ]
 
-  plug(Tesla.Middleware.Logger)
+  plug Tesla.Middleware.Logger
 
   defp get_authorization(header_name) do
     {header_name, "token: " <> Application.get_env(@app, :auth_token)}
