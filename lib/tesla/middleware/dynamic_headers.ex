@@ -1,23 +1,26 @@
 defmodule Tesla.Middleware.DynamicHeaders do
   @moduledoc """
-  Set headers dynamically at runtime.
+  Middleware for the [Tesla](https://hexdocs.pm/tesla/readme.html) HTTP client
+  that sets value for HTTP headers dynamically at runtime from the application
+  environment.
 
-  This is most useful to handle secrets that should not be compiled into the
-  release.
+  This is most useful to handle secrets such as auth tokens. If you set secrets at
+  compile time, then they are hard coded into the release file, a security risk.
+  Similarly, if you build your code in a CI system, then you have to make the
+  secrets available there.
 
   ## Options
 
-  It takes a single option, either a list of tuples or a function.
-  The first element of the tuple is the header name.
-  Other values are as follows:
+  The plug takes a single argument, either a list of tuples or a function.
+  The first element of the tuple is the header name. Other values are as follows:
 
-  * `{application, key}`: Reads the value from `Application.get_env/2`
-  * `{application, key, default}`: Reads the value from `Application.get_env/3`
-  * Function with arity 1: Calls the function with the header name to get the value
+  * `{application, key}`: Read the value from `Application.get_env/2`
+  * `{application, key, default}`: Read the value from `Application.get_env/3`
+  * Function with arity 1: Call the function with the header name to get the value
   * Any other value is passed through as is, same as `Tesla.Middleware.Headers`
 
-  If the option is a zero-arity function, it is called to generate a list of
-  `{header_name, value`} tuples.
+  If the argument is a zero-arity function, it is called to generate a list of
+  `{header_name, value}` tuples.
 
   ## Examples
 
@@ -25,12 +28,18 @@ defmodule Tesla.Middleware.DynamicHeaders do
   defmodule FooClient do
     use Tesla
 
+    @app :foo_client
+
+    plug Tesla.Middleware.BaseUrl, "https://example.com/"
+
     plug Tesla.Middleware.DynamicHeaders, [
-      {"X-Foo-Token", {:my_client, :foo_token}},
-      {"X-Bar-Token", {:my_client, :bar_token, "default"}},
-      {"Authorization", &get_authorization/1}},
+      {"X-Foo-Token", {@app, :foo_token}},
+      {"X-Bar-Token", {@app, :bar_token, "default"}},
+      {"Authorization", &get_authorization/1},
       {"content/type", "application/json"}
-    ]
+      ]
+
+    plug Tesla.Middleware.Logger
 
     defp get_authorization("Authorization") do
       "token: " <> Application.get_env(:my_client, :auth_token)
@@ -38,19 +47,23 @@ defmodule Tesla.Middleware.DynamicHeaders do
   end
   ```
 
+  The following example uses a custom function to generate all the headers:
+
   ```
   defmodule FooClient do
     use Tesla
 
+    @app :foo_client
+
     plug Tesla.Middleware.DynamicHeaders, &get_dynamic_headers/0
 
     defp get_dynamic_headers do
-      Application.get_env(:foo_client, :auth_headers)
+      Application.get_env(@app, :headers)
     end
   end
   ```
 
-  The equivalent configuration in `config/test.exs` might look like:
+  The app configuration in `config/test.exs` might look like:
 
   ```
   config :foo_client,
@@ -64,13 +77,14 @@ defmodule Tesla.Middleware.DynamicHeaders do
     ]
   ```
 
-  In production, you would set environment variables with the tokens, then read them
-  in `config/runtime.exs`:
+  In production, you would normally set environment variables with the tokens
+  then read them in `config/runtime.exs`:
 
-  ```elixir
-  config :foo_client,
-    foo_token: = System.get_env("FOO_TOKEN") || raise "missing environment variable FOO_TOKEN"
   ```
+  config :foo_client,
+    foo_token: System.get_env("FOO_TOKEN") || raise "missing environment variable FOO_TOKEN"
+  ```
+
   """
   @behaviour Tesla.Middleware
 
